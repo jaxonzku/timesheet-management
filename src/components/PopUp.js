@@ -10,29 +10,37 @@ const PopUp = () => {
 	const {
 		open,
 		handleClose,
-		handleInputChange,
 		selectedDate,
 		setSelectedProject,
 		selectedProject,
 		timesheetData,
+		setTimesheetData,
+		hours,
+		setHours,
 	} = useContext(TimesheetContext);
-	const [hours, setHours] = useState("");
 
 	const handleSubmit = () => {
-		submitTimesheet({
-			project_id: selectedProject,
-			timesheet: timesheetData,
-		})
-			.then((response) => {
-				alert("Timesheet submitted successfully!");
-			})
-			.catch((error) => {
-				console.error("Error submitting timesheet:", error);
-			});
 		if (selectedDate) {
-			handleInputChange(selectedDate, hours, selectedProject);
+			// Temporary local state to store new timesheet data
+			const newTimesheetData = {
+				...timesheetData,
+				[selectedDate]: [hours, selectedProject],
+			};
+
+			setTimesheetData(newTimesheetData);
+			submitTimesheet({
+				project_id: selectedProject,
+				timesheet: newTimesheetData,
+			})
+				.then((response) => {
+					alert("Timesheet submitted successfully!");
+				})
+				.catch((error) => {
+					console.error("Error submitting timesheet:", error);
+				});
+
+			handleClose();
 		}
-		handleClose();
 	};
 
 	return (

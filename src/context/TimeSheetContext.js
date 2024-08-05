@@ -8,6 +8,7 @@ export const TimesheetProvider = ({ children }) => {
 	const [timesheetData, setTimesheetData] = useState({});
 	const [open, setOpen] = useState(false);
 	const [selectedDate, setSelectedDate] = useState(null);
+	const [hours, setHours] = useState("");
 
 	const handleInputChange = (date, hours, project) => {
 		setTimesheetData((prevData) => ({ ...prevData, [date]: [hours, project] }));
@@ -21,6 +22,7 @@ export const TimesheetProvider = ({ children }) => {
 	const handleClose = () => {
 		setOpen(false);
 		setSelectedDate(null);
+		setHours("");
 	};
 
 	const [projects, setProjects] = useState([]);
@@ -44,6 +46,8 @@ export const TimesheetProvider = ({ children }) => {
 				handleClose,
 				selectedDate,
 				projects,
+				setHours,
+				hours,
 			}}
 		>
 			{children}

@@ -2,6 +2,8 @@ import React, { useContext } from "react";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import { TimesheetContext } from "../context/TimeSheetContext";
+import { Grid, Typography } from "@mui/material";
+
 const CalenderComp = () => {
 	const { handleOpen, timesheetData, projects } = useContext(TimesheetContext);
 
@@ -14,10 +16,23 @@ const CalenderComp = () => {
 			if (cellData) {
 				const project = projects.find((el) => el.id === cellData[1]);
 				return (
-					<div className="tile-content">
-						<p>{`Hours: ${cellData[0]}`}</p>
-						<p>{`${project ? project.name : "Unknown Project"}`}</p>
-					</div>
+					<Grid
+						sx={{
+							background: "green",
+							marginLeft: 3,
+							borderRadius: 2,
+							padding: 1,
+						}}
+					>
+						<Typography
+							fontSize={15}
+							color={"white"}
+						>{`Hours: ${cellData[0]}`}</Typography>
+						<Typography fontSize={15} color={"white"}>
+							{" "}
+							{`${project ? project.name : "Unknown Project"}`}
+						</Typography>
+					</Grid>
 				);
 			}
 
